@@ -175,7 +175,7 @@ objsQueue should be considered beta software (denoted by the less than 1.0 versi
 Security Concerns
 -----------------
 
-For simplicity and by design, objsQueue allows you to run _any_ method on the object specified as its target.  This includes inherited methods (dealloc for instance).   It is recommended that ObjQueue is used with HTML and JavaScript code that is local and bundled with the application source.  __If third party sites will be loaded in your UIWebView it is highly recommended that you turn off the objsQueue (using the stopQueue method) before navigating away from a trusted source.__
+For simplicity and by design, objsQueue allows you to run _any_ method on the object specified as its target.  This includes inherited methods (dealloc for instance).   It is recommended that objsQueue is used with HTML and JavaScript code that is local and bundled with the application source.  __If third party sites will be loaded in your UIWebView it is highly recommended that you turn off the objsQueue (using the stopQueue method) before navigating away from a trusted source.__
 
 __It is not recommended to use the host ViewController as the target.__  In the example code, you will notice that the parameter for initAndStartWithTarget is 'self'.  In production, a separate (and safe) class should be created specifically for objsQueue methods and an instance of this class should be set as the target.
 
