@@ -1,0 +1,57 @@
+<html>
+<head>
+	<script type="text/javascript" src="objsQueue.js"></script>
+	<script type="text/javascript">
+        // Adds an objective-c command to objsQueue
+        function runCommand()
+		{
+            var didComplete = function(obj){ writeToOutput('runCommand didComplete with value ' + obj.value); };
+            var didFail = function(obj){ writeToOutput('runCommand didFail ' + obj.value); };
+			objsQueue.add("methodName:secondString:", ['test','test2'], didComplete, didFail);
+		}
+        
+        // Log to the output div
+        function writeToOutput(text)
+        {
+            var objDiv = document.getElementById("output");
+            objDiv.innerHTML = objDiv.innerHTML + "<br/>" + new Date() + ": " + text;
+            objDiv.scrollTop = objDiv.scrollHeight;
+        }
+	</script>
+</head>
+<body>
+    <h3>objsQueue - Basic Time Test</h3>
+    <div style="width:710px; font-size: 12px; font-style: italic">This test will increment a count every 50ms, and report how long it takes the count to reach 500.  If there was no latency during incrementing, the result of the test would be 25,000ms, however some miliseconds are lost executing the setInterval functions and others are lost while the JavaScript engine interprets the commands.  You are able to run this test with objsQueue on and off to compare results/latency effects.  For extra randomness you can tap the 'Run a Command!' link to manually add commands to the queue.<br/><br/></div>
+	<div style="float: right;" id="commandLine"><a href="javascript:runCommand();">Run a Command!</a><br/></div>
+    <div><span id="count_div">0</span>
+    <span id="goal"><span style="color: #999999">Time test is in progress...</span></span></div>
+    <div id="output" style="width: 975px; height: 500px; overflow: scroll; border: 1px solid black; padding: 10px;"></div>
+    
+    <script type="text/javascript">
+        
+        // Adding a command to the queue every 250ms
+        var runCommandInterval = setInterval(runCommand, 250);
+        
+        // Incrementing a counter variable and displaying it in HTML
+        // This happens every 50ms and reports at 500 count so 500 * 50 = 25000
+        
+        var i = 0;
+        var startTime = new Date().getTime();
+        
+        // The function that looks for and executes items in the queue is running every 100ms, this function runs every 50
+        var countInterval = setInterval(function()
+        { 
+            document.getElementById('count_div').innerHTML = "Count every 50ms at: " + (++i) + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"; 
+            if(i == 500)
+            { 
+                time = new Date().getTime() - startTime;
+                document.getElementById('goal').innerHTML = "<span style='color: #000099'>Reached 500 in " + time + "ms</span>";
+                clearInterval(countInterval);
+                clearInterval(runCommandInterval);
+            }
+        }, 50);  
+        
+    </script>
+</body>
+	
+</html>

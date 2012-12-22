@@ -1,0 +1,29 @@
+<html>
+    <head>
+        <script type="text/javascript" src="objsQueue.js"></script>
+        <script type="text/javascript">
+            // Adds an objective-c command to objsQueue
+            function runCommand()
+            {
+                var didComplete = function(obj){ alert('runCommand didComplete.  Objective-C returned: "' + obj.value + '"'); };
+                var didFail = function(obj){ alert('runCommand didFail ' + obj.value); };
+                objsQueue.add("methodName:secondString:", ['test','test2'], didComplete, didFail);
+            }
+            </script>
+    </head>
+    <body>
+        <h3>objsQueue - Simple Example</h3>
+        <div style="width:710px; font-size: 12px; font-style: italic">This example will queue an objective-c function.  Alerts will appear when the command is finished.<br/><br/></div>
+        <div><a href="javascript:runCommand();">Run a Command!</a><br/><br/><br/></div>
+        JavaScript Source
+        <pre>
+function runCommand()
+{
+    var didComplete = function(obj){ alert('runCommand didComplete.  Objective-C returned: "' + obj.value + '"'); };
+    var didFail = function(obj){ alert('runCommand didFail ' + obj.value); };
+    objsQueue.add("methodName:secondString:", ['test','test2'], didComplete, didFail);
+}
+        </pre>
+    </body>
+	
+</html>

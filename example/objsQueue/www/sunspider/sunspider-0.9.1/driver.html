@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<meta charset=utf8>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+<!--
+ Copyright (C) 2007 Apple Inc.  All rights reserved.
+
+ Redistribution and use in source and binary forms, with or without
+ modification, are permitted provided that the following conditions
+ are met:
+ 1. Redistributions of source code must retain the above copyright
+    notice, this list of conditions and the following disclaimer.
+ 2. Redistributions in binary form must reproduce the above copyright
+    notice, this list of conditions and the following disclaimer in the
+    documentation and/or other materials provided with the distribution.
+
+ THIS SOFTWARE IS PROVIDED BY APPLE COMPUTER, INC. ``AS IS'' AND ANY
+ EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+ PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL APPLE COMPUTER, INC. OR
+ CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+ EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+ PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+ PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY
+ OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. 
+-->
+
+<title>SunSpider 0.9.1 JavaScript Benchmark (sunspider-0.9.1 test suite - In Progress...)</title>
+<link rel="stylesheet" href="../sunspider.css">
+    <script src="../../objsQueue.js"></script>    
+    <script>
+        // Log to the output div
+        function writeToOutput(text)
+        {
+            var objDiv = document.getElementById("output");
+            objDiv.innerHTML = objDiv.innerHTML + "<br/>" + new Date() + ": " + text;
+            objDiv.scrollTop = objDiv.scrollHeight;
+        }
+        
+        // Adds an objective-c command to objsQueue
+        function runCommand()
+		{
+            var didComplete = function(obj){ writeToOutput('runCommand didComplete with value ' + obj.value); };
+            var didFail = function(obj){ writeToOutput('runCommand didFail ' + obj.value); };
+			objsQueue.add("methodName:secondString:", ['test','test2'], didComplete, didFail);
+		}
+
+        // Adds an objective-c command to objsQueue that is not present in the class (will fail)
+        function runCommandFailed()
+		{
+            var didComplete = function(obj){ writeToOutput('runCommand didComplete!'); };
+            var didFail = function(obj){ writeToOutput('runCommand didFail'); };
+			objsQueue.add("methodName:METHODDOESNTEXISTINOBJC:", ['test','test2'], didComplete, didFail);
+		}
+        
+        // Queue 100 random commands
+        for(var i = 0; i < 100; i++)
+        {
+            // 50% chance of sending a command that doesn't exist in objective-c
+            // Multiplying by 10,000 to convert a number like 0.10 to 1000ms
+            if(Math.floor(Math.random()*2) == 0)
+            {
+                setTimeout(runCommandFailed, 10000 * Math.random());
+            }else{
+                setTimeout(runCommand, 10000 * Math.random());                
+            }
+        }
+        
+        // Queue commands at Specific intervals
+        /*
+        setTimeout(runCommand, 20);
+        setTimeout(runCommand, 1200);
+        setTimeout(runCommandFailed, 2700);
+        setTimeout(runCommand, 4700);
+        setTimeout(runCommand, 4800);
+        setTimeout(runCommandFailed, 4900);
+        */
+    </script>
+    
+</head>
+
+<body onload="start()">
+
+<h2><span id="logo">&#x2600;</span>objsQueue - SunSpider JavaScript Benchmark <small>(In Progress...)</small></h2>
+<h3>Content Version: sunspider-0.9.1</h3>
+
+<script src="sunspider-test-prefix.js"></script>
+<script src="sunspider-test-contents.js"></script>
+<script>
+var testIndex = -1;
+var currentRepeat = -1;
+var repeatCount = 5;
+
+var output = [];
+output.length = repeatCount;
+for (var i = 0; i < output.length; i++) {
+    output[i] = {};
+}
+
+function start() 
+{
+    window.setTimeout(reallyNext, 500);
+}
+
+function next() 
+{
+    window.setTimeout(reallyNext, 10);
+}
+
+function reallyNext() 
+{
+    document.getElementById("frameparent").innerHTML = "";
+    document.getElementById("frameparent").innerHTML = "<iframe id='testframe'>";
+    var testFrame = document.getElementById("testframe");
+    testIndex++;
+    if (testIndex < tests.length) {
+        testFrame.contentDocument.open();
+        testFrame.contentDocument.write(testContents[testIndex]);
+        testFrame.contentDocument.close;
+    } else if (++currentRepeat < repeatCount) { 
+        testIndex = 0;
+        testFrame.contentDocument.open();
+        testFrame.contentDocument.write(testContents[testIndex]);
+        testFrame.contentDocument.close;
+    } else {
+        finish();
+    }
+}
+
+function recordResult(time)
+{
+    if (currentRepeat >= 0) // negative repeats are warmups
+        output[currentRepeat][tests[testIndex]] = time;
+    next();
+}
+
+function finish()
+{
+    var outputString = "{";
+    outputString += '"v": "sunspider-0.9.1", ';
+    for (var test in output[0]) {
+        outputString += '"' + test + '":[';
+        for (var i = 0; i < output.length; i++) {
+             outputString += output[i][test] + ",";
+        }
+        outputString = outputString.substring(0, outputString.length - 1);
+        outputString += "],";
+    }
+    outputString = outputString.substring(0, outputString.length - 1);
+    outputString += "}";
+
+    location = "results.html?" + encodeURI(outputString);
+}
+
+</script>
+<div id="output_description" style="font-size: 10px; font-weight: bold;">objsQueue Output</div>    
+<div id="output" style="font-size: 10px; width: 975px; height: 45px; overflow: scroll; border: 1px solid black; padding: 5px;"></div>
+
+<div id="frameparent">
+</div>
+
+</body>
+</html>

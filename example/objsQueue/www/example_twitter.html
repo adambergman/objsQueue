@@ -1,0 +1,43 @@
+<html>
+    <head>
+        <script type="text/javascript" src="objsQueue.js"></script>
+        <script type="text/javascript">
+            function sendTweet()
+            {
+                var didComplete = function(obj){};
+                var didFail = function(obj){ alert('Command Failed!'); };
+                objsQueue.add("sendTweet:", ['Tweet Tweet!'], didComplete, didFail);
+            }
+            
+            function openTweet()
+            {
+                var didComplete = function(obj){};
+                var didFail = function(obj){ alert('Command Failed!'); };
+                objsQueue.add("openTweet", [], didComplete, didFail);
+            }
+            </script>
+    </head>
+    <body>
+        <h3>objsQueue - Native Twitter Example</h3>
+        <div style="width:710px; font-size: 12px; font-style: italic">This example will queue an objective-c function to send a Tweet using the iOS5 built in Twitter API.  Note that this must be running on an actual device with a Twitter account setup.  If you have not added a Twitter account in the Settings of iOS or if you are running on the simulator this call will appear to do nothing.<br/><br/></div>
+        <div><a href="javascript:sendTweet();">Send a Prepopulated Tweet with JavaScript</a><br/><br/></div>
+        <div><a href="javascript:openTweet();">Open a blank Tweet with JavaScript</a><br/><br/><br/></div>
+        JavaScript Source
+        <pre>
+function sendTweet()
+{
+    var didComplete = function(obj){};
+    var didFail = function(obj){ alert('Command Failed!'); };
+    objsQueue.add("sendTweet:", ['Tweet Tweet!'], didComplete, didFail);
+}
+
+function openTweet()
+{
+    var didComplete = function(obj){};
+    var didFail = function(obj){ alert('Command Failed!'); };
+    objsQueue.add("openTweet", [], didComplete, didFail);
+}
+        </pre>
+    </body>
+	
+</html>
