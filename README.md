@@ -1,7 +1,7 @@
 objsQueue 0.9.0
 ===============
 
-objsQueue is lightweight library that provides connectivity between the content running in a UIWebView and the native, Objective-C application, that contains the UIWebView.  To use it, add the Objective-C library files, then initialize and start the queue.  In your HTML or JavaScript files, import the objQueue.js file, and your web content is now connected to your native app.  For more detailed instructions, see the 'How to Use objsQueue' section below.  The Objective-C portion of this library includes four files: an interface, an implementation, and the JSONKit library.  The JavaScript portion includes one JavaScript file.
+objsQueue is lightweight library that provides connectivity between the content running in a UIWebView and the native Objective-C application that contains the UIWebView.  To use it, add the Objective-C library files then initialize and start the queue.  In your HTML or JavaScript files, import the objQueue.js file and your web content is now connected to your native app.  For more detailed instructions, see the 'How to Use objsQueue' section below.  The Objective-C portion of this library includes four files: an interface, an implementation, and the JSONKit library.  The JavaScript portion includes one JavaScript file.
 
 
 How it Works
@@ -175,7 +175,7 @@ objsQueue should be considered beta software (denoted by the less than 1.0 versi
 Security Concerns
 -----------------
 
-For simplicity and by design, objsQueue allows you to run _any_ method on the object specified as its target.  This includes inherited methods (dealloc for instance).   Ideally, it's used with HTML and JavaScript code that is local and bundled with the application source.  __If third party sites will be loaded in your UIWebView it is highly recommended that you turn off the objsQueue (using the stopQueue method) before navigating away from a trusted source.__
+For simplicity and by design, objsQueue allows you to run _any_ method on the object specified as its target.  This includes inherited methods (dealloc for instance).   It is recommended that ObjQueue is used with HTML and JavaScript code that is local and bundled with the application source.  __If third party sites will be loaded in your UIWebView it is highly recommended that you turn off the objsQueue (using the stopQueue method) before navigating away from a trusted source.__
 
 __It is not recommended to use the host ViewController as the target.__  In the example code, you will notice that the parameter for initAndStartWithTarget is 'self'.  In production, a separate (and safe) class should be created specifically for objsQueue methods and an instance of this class should be set as the target.
 
@@ -198,6 +198,9 @@ Acknowledgements
 
 objsQueue uses JSONKit written by John Engelhart  
 http://github.com/johnezang/JSONKit
+
+The example project uses the WebKit SunSpider JavaScript Benchmark
+http://www.webkit.org/perf/sunspider/sunspider.html
 
 
 License
