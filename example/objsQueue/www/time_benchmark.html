@@ -1,4 +1,10 @@
 <html>
+    <!--
+     //  This work is licensed under the Creative Commons Attribution 3.0 Unported License.
+     //  To view a copy of this license, visit http://creativecommons.org/licenses/by/3.0/ or
+     //  send a letter to Creative Commons, 444 Castro Street, Suite 900, Mountain View,
+     //  California, 94041, USA.
+     -->
 <head>
 	<script type="text/javascript" src="objsQueue.js"></script>
 	<script type="text/javascript">
@@ -7,10 +13,10 @@
 		{
             var didComplete = function(obj){ writeToOutput('runCommand didComplete with value ' + obj.value); };
             var didFail = function(obj){ writeToOutput('runCommand didFail ' + obj.value); };
-			objsQueue.add("methodName:secondString:", ['test','test2'], didComplete, didFail);
+			objsQueue.add("methodName:secondString:", {params:['test','test2'], complete:didComplete, fail:didFail});
 		}
         
-        // Log to the output div
+        // Log to the output div and scroll to bottom
         function writeToOutput(text)
         {
             var objDiv = document.getElementById("output");
@@ -45,7 +51,7 @@
             if(i == 500)
             { 
                 time = new Date().getTime() - startTime;
-                document.getElementById('goal').innerHTML = "<span style='color: #000099'>Reached 500 in " + time + "ms</span>";
+                document.getElementById('goal').innerHTML = "<span style='color: #000099'>Reached 500 in " + time + "ms (+" + (time - 25000) + "ms)</span>";
                 clearInterval(countInterval);
                 clearInterval(runCommandInterval);
             }

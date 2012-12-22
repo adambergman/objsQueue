@@ -1,27 +1,45 @@
 <html>
+    <!--
+     //  This work is licensed under the Creative Commons Attribution 3.0 Unported License.
+     //  To view a copy of this license, visit http://creativecommons.org/licenses/by/3.0/ or
+     //  send a letter to Creative Commons, 444 Castro Street, Suite 900, Mountain View,
+     //  California, 94041, USA.
+     -->
     <head>
         <script type="text/javascript" src="objsQueue.js"></script>
         <script type="text/javascript">
             // Adds an objective-c command to objsQueue
+            function runCommandNoParams()
+            {
+                objsQueue.add("methodName");
+            }
+            
+            // Adds an objective-c command with parameters to objsQueue
             function runCommand()
             {
                 var didComplete = function(obj){ alert('runCommand didComplete.  Objective-C returned: "' + obj.value + '"'); };
                 var didFail = function(obj){ alert('runCommand didFail ' + obj.value); };
-                objsQueue.add("methodName:secondString:", ['test','test2'], didComplete, didFail);
+                objsQueue.add("methodName:secondString:", {params:['test','test2'], complete:didComplete, fail:didFail});
             }
             </script>
     </head>
     <body>
         <h3>objsQueue - Simple Example</h3>
-        <div style="width:710px; font-size: 12px; font-style: italic">This example will queue an objective-c function.  Alerts will appear when the command is finished.<br/><br/></div>
-        <div><a href="javascript:runCommand();">Run a Command!</a><br/><br/><br/></div>
+        <div style="width:710px; font-size: 12px; font-style: italic">This example will queue an objective-c function.  Alerts will appear when the commands are finished.<br/><br/></div>
+        <div><a href="javascript:runCommandNoParams();">Run a Command! runCommandNoParams()</a><br/><br/></div>
+        <div><a href="javascript:runCommand();">Run another Command! runCommand()</a><br/><br/><br/></div>
         JavaScript Source
         <pre>
+function runCommandNoParams()
+{
+    objsQueue.add("methodName");
+}
+            
 function runCommand()
 {
     var didComplete = function(obj){ alert('runCommand didComplete.  Objective-C returned: "' + obj.value + '"'); };
     var didFail = function(obj){ alert('runCommand didFail ' + obj.value); };
-    objsQueue.add("methodName:secondString:", ['test','test2'], didComplete, didFail);
+    objsQueue.add("methodName:secondString:", {params:['test','test2'], complete:didComplete, complete:didFail);
 }
         </pre>
     </body>

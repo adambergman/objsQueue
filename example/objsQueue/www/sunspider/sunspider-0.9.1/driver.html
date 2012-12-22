@@ -47,7 +47,7 @@
 		{
             var didComplete = function(obj){ writeToOutput('runCommand didComplete with value ' + obj.value); };
             var didFail = function(obj){ writeToOutput('runCommand didFail ' + obj.value); };
-			objsQueue.add("methodName:secondString:", ['test','test2'], didComplete, didFail);
+			objsQueue.add("methodName:secondString:", {params:['test','test2'], complete:didComplete, fail:didFail});
 		}
 
         // Adds an objective-c command to objsQueue that is not present in the class (will fail)
@@ -55,7 +55,7 @@
 		{
             var didComplete = function(obj){ writeToOutput('runCommand didComplete!'); };
             var didFail = function(obj){ writeToOutput('runCommand didFail'); };
-			objsQueue.add("methodName:METHODDOESNTEXISTINOBJC:", ['test','test2'], didComplete, didFail);
+			objsQueue.add("methodName:METHODDOESNTEXISTINOBJC:", {params:['test','test2'], complete:didComplete, complete:didFail});
 		}
         
         // Queue 100 random commands

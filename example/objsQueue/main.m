@@ -3,7 +3,7 @@
 //  objsQueue
 //
 //  Created by Adam Bergman on 3/8/12.
-//  Copyright (c) 2012 Blue Diesel. All rights reserved.
+//  Copyright (c) 2012 Adam Bergman. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
