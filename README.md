@@ -109,7 +109,6 @@ __Basic Time Test (25,000ms long, 100 native calls made, at 1 call per 250ms)__
 		<td><strong>Total Time [ON]</strong></td>
 		<td><strong>Total Time [OFF]</strong></td>		
 		<td><strong>Difference</strong></td>
-		<td>&nbsp;</td>
 	</tr>
 	<tr>
 		<td>iOS 5.1 iPad Simulator</td>
