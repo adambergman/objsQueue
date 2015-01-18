@@ -1,3 +1,7 @@
+*I will no longer be contributing code to this project.  Although this technique is still valid for communicating with a UIWebView, in iOS 8.0 Apple has made WKWebKit available.  I would recommend that you use a WKWebView if you are going to be communicating with the browser and performance is a concern.* 
+
+*For more information see: https://developer.apple.com/library/ios/documentation/WebKit/Reference/WKWebView_Ref/index.html*
+
 objsQueue 0.9.0
 ===============
 
